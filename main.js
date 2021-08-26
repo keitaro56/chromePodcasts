@@ -19,16 +19,21 @@ document.body.onload = function()
 						//read response
 						let xmlDoc = request.responseXML;
 						
-						//go through rss file
-						let titles = xmlDoc.getElementsByTagName("title");
-						let links = xmlDoc.getElementsByTagName("enclosure");
+						//1.find the title of the podcast
+						let name = xmlDoc.getElementsByTagName("channel")[0].childNodes[1].innerHTML;
+						document.getElementById("name").innerHTML = name;
+
+						//2.go through rss file
+						let items = xmlDoc.getElementsByTagName("item");
 						let txt = "";
 						
-						for (i = 0; i< Math.min(links.length, titles.length); i++)
+						for (i = 0; i < items.length - 1; i++) //avoid the last one
 						{
-							if(links[i] != "undefined" && titles[i] != "undefined")
+							if (items[i] != "undefined" &&
+								items[i].childNodes[11] != "undefined" &&
+								items[i].childNodes[1] != "undefined")
 							{
-								txt += "<a href=\"" + links[i].attributes["url"].nodeValue + "\" target=\"_blank\">" + titles[i].childNodes[0].nodeValue + "<\a><br>";
+								txt += "<a href=\"" + items[i].childNodes[11]/*=enclosure*/.attributes["url"].nodeValue + "\" target=\"_blank\">" + items[i].childNodes[1]/*=title*/.childNodes[0].nodeValue + "<\a><br>";
 							}
 						}
   
