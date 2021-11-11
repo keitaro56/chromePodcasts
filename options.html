@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="options.css">
-  </head>
-  <body>
-	<div id="title">
-		Options
-	</div>
-	<div id="options">
-	RSS to read : <input type="text" id="rssToRead"></input>
-	</div>
-    <script src="options.js">
-	</script> 
-  </body>
+	<head>
+		<!--<link rel="stylesheet" href="options.css">-->
+	</head>
+	
+	<body>
+		<div id="title">Options</div>
+		
+		<div id="options">
+
+			<!-- possibility to add more rss -->
+			<input type="text" id="rssName" placeholder="name of the podcast">
+			<br>
+			<input type="text" id="rssAddress" placeholder="address of the rss" size=75>
+			<input type="button" value="add" id="podcastAdd">
+			<br>
+			<br>
+
+			<!-- where to put added rss -->
+			<div id="more">
+
+			</div>
+
+		</div>
+
+    	<script src="options.js">
+		</script> 
+  	</body>
 </html>

@@ -6,7 +6,8 @@ document.body.onload = function()
 	chrome.storage.sync.get("options", function(data)
 	{
 		//find the rss to read in options value stored
-		rssToRead = data["options"]["rssToRead"];
+		numRssToRead = data["options"]["selection"];
+		address = data["options"][numRssToRead]["rssAddress"];
 		
 		//send a request to load the RSS link
 		let request = new XMLHttpRequest();
@@ -33,10 +34,11 @@ document.body.onload = function()
 					if (items[i] != "undefined" &&
 						items[i].childNodes[11] != "undefined" &&
 						items[i].childNodes[1] != "undefined" &&
-						items[i].childNodes[15] != "undefined")
+						items[i].childNodes[15] != "undefined" &&
+						items[i].childNodes[35] != "undefined")
 					{
 						txtDate = formatDate(items[i].childNodes[15]/*=pubDate*/.childNodes[0].nodeValue);
-						txt += txtDate + "<br>" + "<a href=\"" + items[i].childNodes[11]/*=enclosure*/.attributes["url"].nodeValue + "\" target=\"_blank\">" + items[i].childNodes[1]/*=title*/.childNodes[0].nodeValue + "<\a><br>";
+						txt += txtDate + "<br>" + "[" + items[i].childNodes[35]/*=duration*/.childNodes[0].nodeValue + "]<a href=\"" + items[i].childNodes[11]/*=enclosure*/.attributes["url"].nodeValue + "\" target=\"_blank\">" + items[i].childNodes[1]/*=title*/.childNodes[0].nodeValue + "<\a><br>";
 					}
 				}
 
@@ -45,7 +47,7 @@ document.body.onload = function()
 		};
 		
 		//send the request
-		request.open("GET", rssToRead, true);
+		request.open("GET", address, true);
 		request.send();
 	});
 }
